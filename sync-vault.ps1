@@ -14,7 +14,7 @@ Get-ChildItem $ContentPath -Recurse -Directory | Sort-Object FullName -Descendin
 $copied = 0
 
 Get-ChildItem $VaultPath -Recurse -Filter "*.md" | ForEach-Object {
-    $content = Get-Content $_.FullName -Raw -Encoding UTF8 -ErrorAction SilentlyContinue
+    $content = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::UTF8)
     if ($content -match "dg-publish:\s*true") {
         $relativePath = $_.FullName.Substring($VaultPath.Length + 1)
         $destPath = Join-Path $ContentPath $relativePath
@@ -32,6 +32,6 @@ Set-Location $RepoPath
 git add -A
 $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm"
 git commit -m "sync: $timestamp ($copied notes)" 2>&1
-git push origin HEAD 2>&1
+git push origin HEAD:main 2>&1
 
 Write-Host "GitHub push 완료"

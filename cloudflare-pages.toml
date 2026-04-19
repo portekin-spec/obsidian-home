@@ -1,0 +1,7 @@
+# Cloudflare Pages 빌드 설정
+# Pages 대시보드에서 아래 값으로 설정하세요:
+#
+# Framework preset: None
+# Build command:    npx quartz build
+# Build output:     public
+# Node version:     20
